@@ -1,8 +1,5 @@
-//Ask for username
-const username = prompt('What is your username?');
-
 //Put question and answers in two arrays
-
+ 
 const questions = [
     `What is the capital of Japan?
     a. Seoul
@@ -58,43 +55,56 @@ const questions = [
 
 const correctAnswers = ["b", "b", "b", "b", "b", "c", "a", "c", "c", "b"];
 
+//if answer correct: score += 100
+//if wrong, nothing
+//if answer out of time: score -=50
+//if all questions correct ask bonus question: 
+// Which programing language can work either on Frontend or Backend side.
+// a. Java
+// b. JavaScript (Correct)
+// c. Python
+// d. PHP
+//if correct: score = score * 2
+//when done: alert(`Thank you for playing {username}. Your final won amount is {xxx} euros!`);
+//Ask username with prompt in the beginning
+
+let username = prompt('Choose your username:');
+
 let score = 0;
 
 for (let i = 0; i < questions.length; i++) {
 
+    let timer = setTimeout(() => {
+        alert("Time is up! You didn’t answer in time.");
+        score -= 50;
+    }, 3000);
+
     const userAnswer = prompt(questions[i]);
 
+    clearTimeout(timer);
+
     if (userAnswer.toLowerCase() === correctAnswers[i]) {
-        alert("Correct!");
         score += 100;
+        alert('Correct Answer');
     } else {
-        alert("Wrong!");
-        score += 100;
+        alert('Wrong Answer');
     }
 
-    if (score === 100 * questions.length) {
-        const bonusAnswer = prompt(`BONUS QUESTION:
-        Which programming language can work either on the Frontend or Backend side?
-        a. Java
-        b. JavaScript
-        c. Python
-        d. PHP`);
+    if (score === questions.length * 100) {
+        const bonusQuestionAnswer = prompt(`BONUS QUESTION:
+        Which programing language can work either on Frontend or Backend side.
+     a. Java
+     b. JavaScript
+     c. Python
+     d. PHP`)
 
-        if (bonusAnswer.toLowerCase() === "b") {
-            alert("Correct! You've doubled your score!");
+        if (bonusQuestionAnswer.toLowerCase() === "b") {
             score *= 2;
+            alert('Congratulations, you doubled your score!');
         } else {
-            alert("Wrong! You lose everything.");
             score = 0;
+            alert('Wrong, you lose everything.');
         }
-
-
-        // let timer = setTimeout(() => {
-        //     alert("Time's up!");
-        //     score -= 50;
-        // }, 60000);
-
-        // clearTimeout(timer);
     }
 }
 
